@@ -1,10 +1,10 @@
 # egi-fedcloud-im-tosca
 
-Example files to use [Infrastructure Manager client](https://imdocs.readthedocs.io/en/latest/client.html)
-on the [EGI Federated Cloud](https://www.egi.eu/services/cloud-compute/)
+Example files to use [Infrastructure Manager client](https://imdocs.readthedocs.io/en/latest/client.html).
+on the [EGI Federated Cloud](https://www.egi.eu/services/cloud-compute/).
 
 Note: The code here is intended to be used within the
-[EGI Notebooks service](https://www.egi.eu/services/notebooks/)
+[EGI Notebooks service](https://www.egi.eu/services/notebooks/).
 
 # Configuration
 
@@ -31,6 +31,44 @@ source conda-install/etc/profile.d/conda.sh
 conda activate im-client
 ```
 
+## conda_deactivate.sh
+
+Here is the `conda_deactivate.sh` script mentioned above:
+
+```bash
+#!/usr/bin/env bash
+
+# copied from https://github.com/AMIGA-IAA/hcg-16/blob/master/run.sh
+
+  EXISTS_CONDA=$(which conda) || $(echo "")
+
+  if [[ "${EXISTS_CONDA}" ]] ; then
+    CONDA_PATH=$(dirname $(dirname ${EXISTS_CONDA}))
+    PATH_LIST=$(echo ${PATH} | tr ':' ' ')
+    NEW_PATH=/usr/local/bin
+
+    # loop to get rid of conda paths in PATH
+    for e in $(echo ${PATH_LIST});
+    do
+      if [[ "${e}" != ${CONDA_PATH}* ]] && [[ "${e}" != "/usr/local/bin" ]] ; then
+        NEW_PATH=${NEW_PATH}:${e}
+      fi
+    done
+
+    # reconfig PATH
+    PATH=${NEW_PATH}
+
+    # loop to unset CONDA environment variables
+    for e in $(env | grep CONDA | sed 's/=.*//g');
+    do
+      unset ${e}
+    done
+
+  fi
+```
+
+We use this script to avoid interfering with the available `conda` installation on the Notebooks.
+
 # Workflow
 
 Use the script `generate-im-client-files.py` to generate configuration files for `im-client.py`.
@@ -42,7 +80,8 @@ python generate-im-client-files.py --vo training.egi.eu --site NCG-INGRID-PT
 python generate-im-client-files.py --vo training.egi.eu --site IISAS-FedCloud
 ```
 
-`generate-im-client-files.py` takes two template files as input:
+`generate-im-client-files.py` takes two template files as input that should located
+on the same working directory:
 * `vo-site-auth.dat`: template file to access a site with a VO
 * `vo-site-tosca.yaml`: template file to deploy a single VM using TOSCA
 
