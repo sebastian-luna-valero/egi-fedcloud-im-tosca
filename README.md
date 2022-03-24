@@ -1,6 +1,6 @@
 # egi-fedcloud-im-tosca
 
-Example files to use [Infrastructure Manager client](https://imdocs.readthedocs.io/en/latest/client.html).
+Example files to use [Infrastructure Manager client](https://imdocs.readthedocs.io/en/latest/client.html)
 on the [EGI Federated Cloud](https://www.egi.eu/services/cloud-compute/).
 
 Note: The code here is intended to be used within the
