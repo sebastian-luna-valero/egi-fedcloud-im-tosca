@@ -1,0 +1,24 @@
+
+tosca_definitions_version: tosca_simple_yaml_1_0
+imports:
+- indigo_custom_types: https://raw.githubusercontent.com/indigo-dc/tosca-types/master/custom_types.yaml
+topology_template:
+  node_templates:
+    simple_node:
+      type: tosca.nodes.indigo.Compute
+      capabilities:
+        endpoint:
+          properties:
+            network_name: PUBLIC
+        host:
+          properties:
+            num_cpus: 2
+            mem_size: 4 GB
+        os:
+          properties:
+            image: appdb://TR-FC1-ULAKBIM/egi.ubuntu.20.04?vo.access.egi.eu
+  outputs:
+    node_ip:
+      value: { get_attribute: [ simple_node, public_address, 0 ] }
+    node_creds:
+      value: { get_attribute: [ simple_node, endpoint, credential, 0 ] }

@@ -1,0 +1,2 @@
+id = im; type = InfrastructureManager; token = command(cat /var/run/secrets/egi.eu/access_token)
+id = egi; type = EGI; host = SITE; vo = VO; token = command(cat /var/run/secrets/egi.eu/access_token)
