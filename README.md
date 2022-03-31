@@ -122,5 +122,6 @@ im_client.py destroy <infra-id>
 
 Here we gather locations with example TOSCA files:
 * https://github.com/grycap/im/tree/master/examples
+* https://github.com/grycap/im/blob/master/test/files/tosca_long.yml
 * https://github.com/grycap/im-client/blob/master/test/files/tosca.yml
 * https://github.com/indigo-dc/tosca-types/tree/master/examples
